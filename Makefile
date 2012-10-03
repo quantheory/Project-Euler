@@ -30,19 +30,24 @@ CPPFLAGS += $(INCDIRS)
 
 OBJS := main.o Problems.o Euler1.o Euler2.o
 
+OBJS := $(addprefix $(blddir)/,$(OBJS))
+
 DEPS := $(OBJS:.o=.d)
 
-.PHONY: clean all
+.PHONY: mkblddir clean all
 
 .SUFFIXES:
 
-%.o: %.cpp
+$(blddir)/%.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -MMD -MF $(patsubst %.o,%.d,$@) -c $< -o $@
 
-%.o: %.c
+$(blddir)/%.o: %.c
 	$(CC) $(CFLAGS) $(CPPFLAGS) -MMD -MF $(patsubst %.o,%.d,$@) -c $< -o $@
 
-all: $(EXEDIR)/$(EXENAME)
+all: mkblddir $(EXEDIR)/$(EXENAME)
+
+mkblddir:
+	mkdir -p $(blddir)
 
 $(EXEDIR)/$(EXENAME): $(OBJS)
 	$(LINKER) $(LDFLAGS) $(CPPFLAGS) $(OBJS) -o $@

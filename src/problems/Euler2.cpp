@@ -11,7 +11,7 @@ int euler<2>() {
   int p_num = 2;
 
   auto f = [] (const int &x)
-    { return ! (x%3 && x%5); };
+    { return ! (x%2); };
 
   Filter<int> fil(f);
 

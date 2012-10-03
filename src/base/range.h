@@ -84,4 +84,4 @@ private:
 
 };
 
-#endif
+#endif // RANGE_H

@@ -2,24 +2,29 @@
 #include "EulerIO.h"
 
 #include <numeric>
-#include "range.h"
+#include "fibonacci.h"
 #include "filter.h"
+#include "cap.h"
+#include "terminator.h"
 
 template <>
 int euler<2>() {
 
   int p_num = 2;
 
-  auto f = [] (const int &x)
-    { return ! (x%2); };
+  Filter<int> fil([] (const int &x)
+    { return ! (x%2); });
 
-  Filter<int> fil(f);
+  Fibonacci fib;
 
-  Range nums(1, 4000000);
+  auto sve = fil.wrap(fib);
 
-  auto sve = fil.wrap(nums);
+  Cap<int> capi([] (const int &x)
+    { return x < 4000000; });
 
-  answer_report(p_num, accumulate(sve.begin(), sve.end(), 0));
+  auto fin = capi.wrap(sve);
+
+  answer_report(p_num, accumulate(fin.begin(), fin.end(), 0));
 
   return 0;
 

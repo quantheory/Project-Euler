@@ -2,8 +2,8 @@
 #define SIEVE_H
 
 #include "indicator.h"
+#include "iter_wrap_tools.h"
 #include <iterator>
-#include <utility>
 
 #ifndef NDEBUG
 #include <type_traits>
@@ -14,12 +14,6 @@ class Sieve;
 
 template <typename>
 class SieveIter;
-
-template <typename Iterator>
-using IterVal = typename std::iterator_traits<Iterator>::value_type;
-
-template <typename Container>
-using ContIter = decltype(std::declval<Container>().begin());
 
 template <typename Iterator>
 bool operator==(const SieveIter<Iterator> &,
@@ -36,7 +30,7 @@ class SieveIter
 #ifndef NDEBUG
   static_assert(std::is_base_of<
                 std::input_iterator_tag,
-                std::iterator_traits<Iterator>::iterator_category>,
+                typename std::iterator_traits<Iterator>::iterator_category>::value,
                 "Tried to instantiate SieveIter with non-input iterator.");
 #endif
 
@@ -97,12 +91,9 @@ private:
   }
 
   // Make sure this can be accessed by any Sieve
-  // that produces this type of SieveIter.
-  template <typename Container>
-  friend typename Sieve<Container>::iterator_type Sieve<Container>::begin() const;
-
-  template <typename Container>
-  friend typename Sieve<Container>::iterator_type Sieve<Container>::end() const;
+  // that could produce this type of SieveIter.
+  template <typename>
+  friend class Sieve;
   
 };
 

@@ -15,7 +15,6 @@ class RangeIter
 
 public:
   RangeIter() = default;
-  RangeIter(int n) : i(n) {}
 
   // Dereferencing
   int operator*() const {
@@ -44,11 +43,14 @@ public:
     return old_val;
   }
 
-friend bool operator==(const RangeIter &, const RangeIter &);
-friend bool operator!=(const RangeIter &, const RangeIter &);
+  friend bool operator==(const RangeIter &, const RangeIter &);
+  friend bool operator!=(const RangeIter &, const RangeIter &);
 
 private:
   int i = 0;
+  RangeIter(int n) : i(n) {}
+
+  friend class Range;
 
 };
 

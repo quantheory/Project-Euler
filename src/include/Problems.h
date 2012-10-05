@@ -15,6 +15,12 @@ int euler<1>();
 template <>
 int euler<2>();
 
+template <>
+int euler<3>();
+
+template <>
+int euler<6>();
+
 int solve_euler(char*);
 
 #endif

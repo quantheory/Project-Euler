@@ -28,7 +28,7 @@ INCDIRS = -I$(srcdir)/base -I$(srcdir)/include
 
 CPPFLAGS += $(INCDIRS)
 
-OBJS := main.o Problems.o Euler1.o Euler2.o
+OBJS := main.o Problems.o Euler1.o Euler2.o Euler3.o Euler6.o
 
 OBJS := $(addprefix $(blddir)/,$(OBJS))
 
@@ -47,7 +47,7 @@ $(blddir)/%.o: %.c
 all: mkblddir $(EXEDIR)/$(EXENAME)
 
 mkblddir:
-	mkdir -p $(blddir)
+	@mkdir -p $(blddir)
 
 $(EXEDIR)/$(EXENAME): $(OBJS)
 	$(LINKER) $(LDFLAGS) $(CPPFLAGS) $(OBJS) -o $@

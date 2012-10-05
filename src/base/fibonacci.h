@@ -14,7 +14,6 @@ class FibonacciIter
   : public std::iterator<std::bidirectional_iterator_tag, int> {
 public:
   FibonacciIter() = default;
-  FibonacciIter(int m, int n) : i(m), j(n) {}
 
   // Dereferencing
   int operator*() const {
@@ -45,26 +44,32 @@ public:
     return old_val;
   }
 
-friend bool operator==(const FibonacciIter &, const FibonacciIter &);
-friend bool operator!=(const FibonacciIter &, const FibonacciIter &);
+  friend bool operator==(const FibonacciIter &, const FibonacciIter &);
+  friend bool operator!=(const FibonacciIter &, const FibonacciIter &);
 
 private:
   bool high_j = true;
   int i = 0;
   int j = 1;
 
+  bool is_end = true;
+
+  FibonacciIter(int m, int n) : i(m), j(n), is_end(false) {}
+
+  friend class Fibonacci;
+
 };
 
 // The following definitions prevent the Fibonacci series from ever ending.
 inline bool operator==(const FibonacciIter &lhs, const FibonacciIter &rhs) {
-  return false;
+  return lhs.is_end && rhs.is_end;
 }
 
 inline bool operator!=(const FibonacciIter &lhs, const FibonacciIter &rhs) {
-  return true;
+  return ! (lhs == rhs);
 }
 
-class FibonacciSeries {
+class Fibonacci {
 
 public:
   Fibonacci() = default;
@@ -72,11 +77,11 @@ public:
     : starti(m), startj(n) {}
 
   FibonacciIter begin() const {
-    return FibonacciIter(start);
+    return FibonacciIter(starti, startj);
   }
 
   FibonacciIter end() const {
-    return FibonacciIter(finish);
+    return FibonacciIter();
   }
 
   bool empty() const {
@@ -84,7 +89,7 @@ public:
   }
 
 private:
-  int starti = 0
+  int starti = 0;
   int startj = 1;
 
 };

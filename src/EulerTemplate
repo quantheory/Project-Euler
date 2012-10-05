@@ -1,0 +1,13 @@
+#include "Problems.h"
+#include "EulerIO.h"
+
+template <>
+int euler<EUNUM>() {
+
+  int p_num = EUNUM;
+
+  answer_report(p_num, EUANSWER);
+
+  return 0;
+
+}

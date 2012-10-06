@@ -11,13 +11,13 @@ bool operator==(const RangeIter &, const RangeIter &);
 bool operator!=(const RangeIter &, const RangeIter &);
 
 class RangeIter
-  : public std::iterator<std::bidirectional_iterator_tag, int> {
+  : public std::iterator<std::bidirectional_iterator_tag, long long> {
 
 public:
   RangeIter() = default;
 
   // Dereferencing
-  int operator*() const {
+  long long operator*() const {
     return i;
   }
 
@@ -47,8 +47,8 @@ public:
   friend bool operator!=(const RangeIter &, const RangeIter &);
 
 private:
-  int i = 0;
-  RangeIter(int n) : i(n) {}
+  long long i = 0LL;
+  RangeIter(long long n) : i(n) {}
 
   friend class Range;
 
@@ -66,7 +66,7 @@ class Range {
 
 public:
   Range() = default;
-  Range(int m, int n) : start(m), finish(n) {}
+  Range(long long m, long long n) : start(m), finish(n) {}
 
   RangeIter begin() const {
     return RangeIter(start);
@@ -81,8 +81,8 @@ public:
   }
 
 private:
-  int start = 0;
-  int finish = 0;
+  long long start = 0LL;
+  long long finish = 0LL;
 
 };
 

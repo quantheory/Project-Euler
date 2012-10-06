@@ -22,13 +22,13 @@ endif
 srcdir ?= ./src
 blddir ?= ./bld
 
-VPATH = .:$(blddir):$(srcdir):$(srcdir)/problems
+VPATH = .:$(blddir):$(srcdir):$(srcdir)/base:$(srcdir)/problems
 
 INCDIRS = -I$(srcdir)/base -I$(srcdir)/include
 
 CPPFLAGS += $(INCDIRS)
 
-OBJS := main.o Problems.o Euler1.o Euler2.o Euler3.o Euler6.o
+OBJS := main.o Problems.o prime.o Euler1.o Euler2.o Euler3.o Euler6.o
 
 OBJS := $(addprefix $(blddir)/,$(OBJS))
 

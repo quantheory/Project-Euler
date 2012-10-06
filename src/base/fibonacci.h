@@ -11,12 +11,12 @@ bool operator==(const FibonacciIter &, const FibonacciIter &);
 bool operator!=(const FibonacciIter &, const FibonacciIter &);
 
 class FibonacciIter
-  : public std::iterator<std::bidirectional_iterator_tag, int> {
+  : public std::iterator<std::bidirectional_iterator_tag, long long> {
 public:
   FibonacciIter() = default;
 
   // Dereferencing
-  int operator*() const {
+  long long operator*() const {
     return high_j ? j : i;
   }
 
@@ -49,12 +49,12 @@ public:
 
 private:
   bool high_j = true;
-  int i = 0;
-  int j = 1;
+  long long i = 0;
+  long long j = 1;
 
   bool is_end = true;
 
-  FibonacciIter(int m, int n) : i(m), j(n), is_end(false) {}
+  FibonacciIter(long long m, long long n) : i(m), j(n), is_end(false) {}
 
   friend class Fibonacci;
 
@@ -73,7 +73,7 @@ class Fibonacci {
 
 public:
   Fibonacci() = default;
-  Fibonacci(int m, int n)
+  Fibonacci(long long m, long long n)
     : starti(m), startj(n) {}
 
   FibonacciIter begin() const {
@@ -89,8 +89,8 @@ public:
   }
 
 private:
-  int starti = 0;
-  int startj = 1;
+  long long starti = 0;
+  long long startj = 1;
 
 };
 

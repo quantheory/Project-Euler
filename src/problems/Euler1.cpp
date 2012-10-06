@@ -10,14 +10,14 @@ int euler<1>() {
 
   int p_num = 1;
 
-  auto f = [] (const int &x)
-    { return ! (x%3 && x%5); };
+  auto f = [] (const long long &x)
+    { return ! (x%3LL && x%5LL); };
 
-  Filter<int> fil(f);
+  Filter<long long> fil(f);
 
-  auto sve = fil.wrap(Range(1,1000));
+  auto sve = fil.wrap(Range(1,1000LL));
 
-  answer_report(p_num, accumulate(sve.begin(), sve.end(), 0));
+  answer_report(p_num, accumulate(sve.begin(), sve.end(), 0LL));
 
   return 0;
 

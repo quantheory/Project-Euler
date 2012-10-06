@@ -13,3 +13,6 @@
 
 # Emacs temporaries
 *~
+
+# Fuse hidden files
+*.fuse_hidden

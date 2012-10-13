@@ -14,25 +14,16 @@ public:
 
   Cap(const Cap &) = default;
 
-  Cap(const SimpleIndicator<T> &ind) 
-    : test_ptr(std::make_shared< SimpleIndicator<T> >(ind)) {}
-
-  Cap(SimpleIndicator<T> &&ind) {
-    test_ptr = std::make_shared<SimpleIndicator<T>>
-      (std::forward<SimpleIndicator<T>>(ind));
-  }
-
-  Cap(bool f(const T&)) {
-    test_ptr = std::make_shared<SimpleIndicator<T>>(f);
-  }
+  Cap(Indicator<T> in_test)
+    : test(in_test) {}
 
   template <typename Container>
   Terminator<Container> wrap(const Container &source) const {
-    return Terminator<Container>(source, *test_ptr);
+    return Terminator<Container>(source, test);
   }
 
 protected:
-  std::shared_ptr< Indicator<T> > test_ptr;
+  Indicator<T> test;
 
 };
 

@@ -18,14 +18,14 @@ int euler<3>() {
 
   Prime my_prime;
 
-  Cap<long long> capi([] (const long long &x) { return x <= sqrt(test_val); });
+  Cap<long long> capi([] (const long long &x) -> bool { return x <= sqrt(test_val); });
 
   auto term = capi.wrap(my_prime);
 
   for (const auto &i : term) {
     if (divisible(curr_val, i)) {
       curr_val /= i;
-      if (curr_val == 1) {
+      if (curr_val == 1LL) {
         curr_val = i;
         break;
       }

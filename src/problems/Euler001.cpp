@@ -15,7 +15,7 @@ int euler<1>() {
 
   Filter<long long> fil(f);
 
-  auto sve = fil.wrap(Range(1,1000LL));
+  auto sve = fil.wrap(Range(1LL,1000LL));
 
   answer_report(p_num, accumulate(sve.begin(), sve.end(), 0LL));
 

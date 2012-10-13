@@ -14,25 +14,16 @@ public:
 
   Filter(const Filter &) = default;
 
-  Filter(const SimpleIndicator<T> &ind) 
-    : test_ptr(std::make_shared< SimpleIndicator<T> >(ind)) {}
-
-  Filter(SimpleIndicator<T> &&ind) {
-    test_ptr = std::make_shared<SimpleIndicator<T>>
-      (std::forward<SimpleIndicator<T>>(ind));
-  }
-
-  Filter(bool f(const T&)) {
-    test_ptr = std::make_shared<SimpleIndicator<T>>(f);
-  }
+  Filter(Indicator<T> in_test)
+    : test(in_test) {}
 
   template <typename Container>
   Sieve<Container> wrap(const Container &source) const {
-    return Sieve<Container>(source, *test_ptr);
+    return Sieve<Container>(source, test);
   }
 
 protected:
-  std::shared_ptr< Indicator<T> > test_ptr;
+  Indicator<T> test;
 
 };
 

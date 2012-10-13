@@ -38,12 +38,24 @@ public:
 
   typedef IterVal<Iterator> value_type;
 
-  // Remove default constructor and assignment.
-  SieveIter() = delete;
-  SieveIter &operator=(const SieveIter &) = delete;
+  // Construct with an iterator, an ending iterator,
+  // and a reference to an Indicator.
+  // Note that if test is not specified, no values
+  // will be removed.
+  SieveIter(const Iterator &iter, const Iterator &end,
+            const Indicator<value_type> &ind = [] (const value_type &)
+              { return true; } )
+    : test(ind),
+      curr_val(*iter),
+      source_iter(iter),
+      end_iter(end)
+  {
+    if (!test(curr_val)) ++*this;
+  }
 
   // Can be copy-constructed.
   SieveIter(const SieveIter &) = default;
+  SieveIter &operator=(const SieveIter &) = default;
 
   // Increment
   SieveIter &operator++() {
@@ -71,29 +83,12 @@ public:
   friend bool operator!=<Iterator>(const SieveIter&, const SieveIter&);
 
 protected:
-  const Indicator<value_type> &test;
+  Indicator<value_type> test;
   value_type curr_val;
 
 private:
   Iterator source_iter;
   Iterator end_iter;
-
-  // Construct with an iterator, an ending iterator,
-  // and a reference to an Indicator.
-  SieveIter(const Iterator iter, const Iterator end,
-            const Indicator<value_type> &ind)
-    : test(ind),
-      curr_val(*iter),
-      source_iter(iter),
-      end_iter(end)
-  {
-    if (!test(curr_val)) ++*this;
-  }
-
-  // Make sure this can be accessed by any Sieve
-  // that could produce this type of SieveIter.
-  template <typename>
-  friend class Sieve;
   
 };
 
@@ -116,34 +111,31 @@ public:
 
   typedef SieveIter< ContIter<const Container> > iterator_type;
 
-  // Due to the references, cannot use these defaults.
-  Sieve() = delete;
-  Sieve &operator=(const Sieve &) = delete;
-
-  // Can do copy constructor, though.
+  // Can do copy
   Sieve(const Sieve &) = default;
+  Sieve &operator=(const Sieve &) = default;
 
   // More useful constructor.
   Sieve(const Container &contain,
         const Indicator<typename iterator_type::value_type> &ind)
-    : source(contain), test(ind) {}
+    : source(&contain), test(ind) {}
 
   iterator_type begin() const {
-    return iterator_type(source.begin(), source.end(), test);
+    return iterator_type(source->begin(), source->end(), test);
   }
 
   iterator_type end() const {
-    return iterator_type(source.end(), source.end(), test);
+    return iterator_type(source->end(), source->end(), test);
   }
 
   bool empty() const {
-    return this->source.begin() != this->source.end();
+    return this->source->begin() != this->source.end();
   }
 
 protected:
 
-  const Container &source;
-  const Indicator<typename iterator_type::value_type> &test;
+  const Container *source;
+  Indicator<typename iterator_type::value_type> test;
 
 };
 

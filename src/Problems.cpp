@@ -1,11 +1,7 @@
+#include "EulerStatus.h"
 #include "Problems.h"
 
-#include <string>
-
-using std::stoi;
-
-int solve_euler(char* arg_in) {
-  int p_num = std::stoi(arg_in);
+int solve_euler(int p_num) {
   switch (p_num) {
   case 1:
     return euler<1>();
@@ -16,6 +12,7 @@ int solve_euler(char* arg_in) {
   case 6:
     return euler<6>();
   default:
-    return euler<0>();
+    bad_problem_number(p_num);
+    return EulerStatus::BAD_ARG;
   }
 }

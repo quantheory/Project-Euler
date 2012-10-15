@@ -1,5 +1,5 @@
 #include "Problems.h"
-#include "EulerIO.h"
+#include "EulerStatus.h"
 
 #include <cmath>
 #include "prime.h"
@@ -7,10 +7,11 @@
 
 using std::sqrt;
 
-template <>
-int euler<3>() {
+using std::string;
+using std::to_string;
 
-  int p_num = 3;
+template <>
+int euler_solver<3>(string& solution) {
 
   constexpr long long test_val = 600851475143LL;
 
@@ -32,8 +33,8 @@ int euler<3>() {
     }
   }
 
-  answer_report(p_num, curr_val);
+  solution = to_string(curr_val);
 
-  return 0;
+  return EulerStatus::SUCCESS;
 
 }

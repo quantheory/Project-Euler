@@ -4,24 +4,24 @@
 #include "EulerStatus.h"
 #include "EulerIO.h"
 
+#include <string>
+
 template <int eul_num>
-int euler() {
+int euler_solver(std::string& solution) {
   bad_problem_number(eul_num);
   return EulerStatus::BAD_ARG;
 }
 
 template <>
-int euler<1>();
+int euler_solver<1>(std::string& solution);
 
 template <>
-int euler<2>();
+int euler_solver<2>(std::string& solution);
 
 template <>
-int euler<3>();
+int euler_solver<3>(std::string& solution);
 
 template <>
-int euler<6>();
+int euler_solver<6>(std::string& solution);
 
-int solve_euler(int p_num);
-
-#endif
+#endif //PROBLEMS_H

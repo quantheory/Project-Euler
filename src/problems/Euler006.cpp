@@ -1,13 +1,14 @@
 #include "Problems.h"
-#include "EulerIO.h"
+#include "EulerStatus.h"
 
 #include <numeric>
 #include "range.h"
 
-template <>
-int euler<6>() {
+using std::string;
+using std::to_string;
 
-  int p_num = 6;
+template <>
+int euler_solver<6>(string& solution) {
 
   Range r(1LL,101LL);
 
@@ -15,8 +16,8 @@ int euler<6>() {
 
   long long v1 = accumulate(r.begin(), r.end(), 0LL);
 
-  answer_report(p_num, accumulate(r.begin(),r.end(),v1 *= v1,f));
+  solution = to_string(accumulate(r.begin(),r.end(),v1 *= v1,f));
 
-  return 0;
+  return EulerStatus::SUCCESS;
 
 }

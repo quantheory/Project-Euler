@@ -1,5 +1,5 @@
 #include "EulerIO.h"
-#include "Problems.h"
+#include "EulerProblem.h"
 
 int main(int argc, char **argv) {
 
@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
     if (int status = parse_int(argv[1], p_num))
       return status;
     else
-      return solve_euler(p_num);
+      return EulerProblem(p_num).print_solve();
   }
 
 }

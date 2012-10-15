@@ -1,5 +1,5 @@
 #include "Problems.h"
-#include "EulerIO.h"
+#include "EulerStatus.h"
 
 #include <numeric>
 #include "fibonacci.h"
@@ -7,10 +7,11 @@
 #include "cap.h"
 #include "terminator.h"
 
-template <>
-int euler<2>() {
+using std::string;
+using std::to_string;
 
-  int p_num = 2;
+template <>
+int euler_solver<2>(string& solution) {
 
   Filter<long long> fil([] (const long long &x)
     { return ! (x%2LL); });
@@ -24,8 +25,8 @@ int euler<2>() {
 
   auto fin = capi.wrap(sve);
 
-  answer_report(p_num, accumulate(fin.begin(), fin.end(), 0LL));
+  solution = to_string(accumulate(fin.begin(), fin.end(), 0LL));
 
-  return 0;
+  return EulerStatus::SUCCESS;
 
 }

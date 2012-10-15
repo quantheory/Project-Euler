@@ -1,14 +1,15 @@
 #include "Problems.h"
-#include "EulerIO.h"
+#include "EulerStatus.h"
 
 #include <numeric>
 #include "range.h"
 #include "filter.h"
 
-template <>
-int euler<1>() {
+using std::string;
+using std::to_string;
 
-  int p_num = 1;
+template <>
+int euler_solver<1>(string& solution) {
 
   auto f = [] (const long long &x)
     { return ! (x%3LL && x%5LL); };
@@ -17,8 +18,8 @@ int euler<1>() {
 
   auto sve = fil.wrap(Range(1LL,1000LL));
 
-  answer_report(p_num, accumulate(sve.begin(), sve.end(), 0LL));
+  solution = to_string(accumulate(sve.begin(), sve.end(), 0LL));
 
-  return 0;
+  return EulerStatus::SUCCESS;
 
 }
